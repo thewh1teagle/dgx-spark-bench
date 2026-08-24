@@ -1,0 +1,171 @@
+{
+  "device": {
+    "gpu": "NVIDIA GeForce RTX 3090",
+    "vram_gb": 25.3,
+    "sm": "8.6",
+    "torch": "2.13.0+cu132",
+    "cuda": "13.2",
+    "arch": "x86_64",
+    "power_limit_w": 350.0,
+    "driver": "595.58.03"
+  },
+  "seq": 2048,
+  "roofline": {
+    "matmul_tflops": 70.6,
+    "bandwidth_gbs": 836
+  },
+  "models": {
+    "300m": {
+      "params_b": 0.37,
+      "batch": 4,
+      "seq": 2048,
+      "it_s": 2.735,
+      "tokens_s": 22404,
+      "peak_vram_gb": 13.1,
+      "watts": 349.27,
+      "measured": true
+    },
+    "1.3b": {
+      "params_b": 1.36,
+      "batch": 2,
+      "seq": 2048,
+      "it_s": 1.68,
+      "tokens_s": 6880,
+      "peak_vram_gb": 17.5,
+      "watts": 349.36,
+      "measured": true
+    },
+    "7b": {
+      "params_b": 6.74,
+      "batch": 1,
+      "seq": 2048,
+      "it_s": 0.7276,
+      "tokens_s": 1490,
+      "bf16_weights_gb": 13.5,
+      "qlora_est_gb": 3.7,
+      "watts": 182.35,
+      "measured": false
+    },
+    "30b": {
+      "params_b": 32.53,
+      "batch": 1,
+      "seq": 2048,
+      "it_s": 0.153,
+      "tokens_s": 313,
+      "bf16_weights_gb": 65.1,
+      "qlora_est_gb": 17.9,
+      "watts": 208.38,
+      "measured": false
+    }
+  },
+  "sweep": {
+    "300m": [
+      {
+        "params_b": 0.37,
+        "batch": 1,
+        "seq": 2048,
+        "it_s": 9.503,
+        "tokens_s": 19463,
+        "peak_vram_gb": 5.1,
+        "watts": 238.09,
+        "measured": true
+      },
+      {
+        "params_b": 0.37,
+        "batch": 2,
+        "seq": 2048,
+        "it_s": 5.147,
+        "tokens_s": 21082,
+        "peak_vram_gb": 7.7,
+        "watts": 346.05,
+        "measured": true
+      },
+      {
+        "params_b": 0.37,
+        "batch": 4,
+        "seq": 2048,
+        "it_s": 2.735,
+        "tokens_s": 22404,
+        "peak_vram_gb": 13.1,
+        "watts": 349.27,
+        "measured": true
+      },
+      {
+        "batch": 8,
+        "oom": true
+      }
+    ],
+    "1.3b": [
+      {
+        "params_b": 1.36,
+        "batch": 1,
+        "seq": 2048,
+        "it_s": 3.2,
+        "tokens_s": 6553,
+        "peak_vram_gb": 12.8,
+        "watts": 348.02,
+        "measured": true
+      },
+      {
+        "params_b": 1.36,
+        "batch": 2,
+        "seq": 2048,
+        "it_s": 1.68,
+        "tokens_s": 6880,
+        "peak_vram_gb": 17.5,
+        "watts": 349.36,
+        "measured": true
+      },
+      {
+        "batch": 4,
+        "oom": true
+      }
+    ],
+    "renikud": [
+      {
+        "params_m": 307,
+        "batch": 16,
+        "seq": 256,
+        "precision": "fp16",
+        "it_s": 4.81,
+        "samples_s": 77.0,
+        "peak_vram_gb": 8.4,
+        "measured": true
+      },
+      {
+        "params_m": 307,
+        "batch": 32,
+        "seq": 256,
+        "precision": "fp16",
+        "it_s": 2.76,
+        "samples_s": 88.5,
+        "peak_vram_gb": 12.6,
+        "measured": true
+      },
+      {
+        "params_m": 307,
+        "batch": 64,
+        "seq": 256,
+        "precision": "fp16",
+        "it_s": 1.55,
+        "samples_s": 99.0,
+        "peak_vram_gb": 20.8,
+        "measured": true
+      },
+      {
+        "batch": 128,
+        "oom": true
+      }
+    ]
+  },
+  "renikud": {
+    "params_m": 307,
+    "batch": 64,
+    "seq": 256,
+    "precision": "fp16",
+    "it_s": 1.55,
+    "samples_s": 99.0,
+    "peak_vram_gb": 20.8,
+    "measured": true
+  }
+}

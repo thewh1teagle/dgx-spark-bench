@@ -1,0 +1,189 @@
+{
+  "device": {
+    "gpu": "NVIDIA GB10",
+    "vram_gb": 130.7,
+    "sm": "12.1",
+    "torch": "2.13.0+cu130",
+    "cuda": "13.0",
+    "arch": "aarch64",
+    "power_limit_w": null,
+    "driver": "580.126.09"
+  },
+  "seq": 2048,
+  "roofline": {
+    "matmul_tflops": 93.4,
+    "bandwidth_gbs": 213
+  },
+  "models": {
+    "300m": {
+      "params_b": 0.37,
+      "batch": 4,
+      "seq": 2048,
+      "it_s": 2.05,
+      "tokens_s": 16794,
+      "peak_vram_gb": 13.2,
+      "watts": 61.58,
+      "measured": true
+    },
+    "1.3b": {
+      "params_b": 1.36,
+      "batch": 8,
+      "seq": 2048,
+      "it_s": 0.412,
+      "tokens_s": 6745,
+      "peak_vram_gb": 45.3,
+      "watts": 78.49,
+      "measured": true
+    },
+    "7b": {
+      "params_b": 6.74,
+      "batch": 1,
+      "seq": 2048,
+      "it_s": 0.7736,
+      "tokens_s": 1584,
+      "bf16_weights_gb": 13.5,
+      "qlora_est_gb": 3.7,
+      "watts": 48.03,
+      "measured": false
+    },
+    "30b": {
+      "params_b": 32.53,
+      "batch": 1,
+      "seq": 2048,
+      "it_s": 0.1678,
+      "tokens_s": 344,
+      "bf16_weights_gb": 65.1,
+      "qlora_est_gb": 17.9,
+      "watts": 86.22,
+      "measured": false
+    }
+  },
+  "sweep": {
+    "300m": [
+      {
+        "params_b": 0.37,
+        "batch": 1,
+        "seq": 2048,
+        "it_s": 7.46,
+        "tokens_s": 15279,
+        "peak_vram_gb": 5.1,
+        "watts": 55.16,
+        "measured": true
+      },
+      {
+        "params_b": 0.37,
+        "batch": 2,
+        "seq": 2048,
+        "it_s": 4.005,
+        "tokens_s": 16406,
+        "peak_vram_gb": 7.8,
+        "watts": 60.91,
+        "measured": true
+      },
+      {
+        "params_b": 0.37,
+        "batch": 4,
+        "seq": 2048,
+        "it_s": 2.05,
+        "tokens_s": 16794,
+        "peak_vram_gb": 13.2,
+        "watts": 61.58,
+        "measured": true
+      }
+    ],
+    "1.3b": [
+      {
+        "params_b": 1.36,
+        "batch": 1,
+        "seq": 2048,
+        "it_s": 2.572,
+        "tokens_s": 5268,
+        "peak_vram_gb": 12.9,
+        "watts": 64.32,
+        "measured": true
+      },
+      {
+        "params_b": 1.36,
+        "batch": 2,
+        "seq": 2048,
+        "it_s": 1.467,
+        "tokens_s": 6007,
+        "peak_vram_gb": 17.5,
+        "watts": 72.03,
+        "measured": true
+      },
+      {
+        "params_b": 1.36,
+        "batch": 4,
+        "seq": 2048,
+        "it_s": 0.795,
+        "tokens_s": 6512,
+        "peak_vram_gb": 26.8,
+        "watts": 78.68,
+        "measured": true
+      },
+      {
+        "params_b": 1.36,
+        "batch": 8,
+        "seq": 2048,
+        "it_s": 0.412,
+        "tokens_s": 6745,
+        "peak_vram_gb": 45.3,
+        "watts": 78.49,
+        "measured": true
+      },
+      {
+        "params_b": 1.36,
+        "batch": 16,
+        "seq": 2048,
+        "it_s": 0.204,
+        "tokens_s": 6676,
+        "peak_vram_gb": 82.4,
+        "watts": 75.07,
+        "measured": true
+      }
+    ],
+    "renikud": [
+      {
+        "params_m": 307,
+        "batch": 16,
+        "seq": 256,
+        "precision": "fp16",
+        "it_s": 2.68,
+        "samples_s": 42.9,
+        "peak_vram_gb": 8.5,
+        "measured": true
+      },
+      {
+        "params_m": 307,
+        "batch": 32,
+        "seq": 256,
+        "precision": "fp16",
+        "it_s": 1.61,
+        "samples_s": 51.5,
+        "peak_vram_gb": 12.6,
+        "measured": true
+      },
+      {
+        "params_m": 307,
+        "batch": 64,
+        "seq": 256,
+        "precision": "fp16",
+        "it_s": 0.79,
+        "samples_s": 50.8,
+        "peak_vram_gb": 20.8,
+        "measured": true
+      }
+    ]
+  },
+  "renikud": {
+    "params_m": 307,
+    "batch": 32,
+    "seq": 256,
+    "precision": "fp16",
+    "it_s": 1.61,
+    "samples_s": 51.5,
+    "peak_vram_gb": 12.6,
+    "measured": true
+  }
+}

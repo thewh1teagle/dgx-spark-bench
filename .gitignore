@@ -1,0 +1,16 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+
+# cloned for reference, not part of the benchmark
+plans/renikud/
+results-*.json
+!results/results-*.json
+plans/

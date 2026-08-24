@@ -1,0 +1,71 @@
+{
+  "device": {
+    "gpu": "NVIDIA GB10",
+    "vram_gb": 130.7,
+    "sm": "12.1",
+    "torch": "2.13.0+cu130",
+    "cuda": "13.0",
+    "arch": "aarch64",
+    "power_limit_w": null,
+    "driver": "580.126.09"
+  },
+  "seq": 2048,
+  "roofline": {
+    "matmul_tflops": 93.7,
+    "bandwidth_gbs": 221
+  },
+  "models": {
+    "300m": {
+      "params_b": 0.37,
+      "batch": 1,
+      "seq": 2048,
+      "it_s": 7.601,
+      "tokens_s": 15567,
+      "peak_vram_gb": 5.1,
+      "watts": 59.28,
+      "measured": true
+    },
+    "1.3b": {
+      "params_b": 1.36,
+      "batch": 1,
+      "seq": 2048,
+      "it_s": 2.59,
+      "tokens_s": 5305,
+      "peak_vram_gb": 12.9,
+      "watts": 64.56,
+      "measured": true
+    },
+    "7b": {
+      "params_b": 6.74,
+      "batch": 1,
+      "seq": 2048,
+      "it_s": 0.7901,
+      "tokens_s": 1618,
+      "bf16_weights_gb": 13.5,
+      "qlora_est_gb": 3.7,
+      "watts": 42.5,
+      "measured": false
+    },
+    "30b": {
+      "params_b": 32.53,
+      "batch": 1,
+      "seq": 2048,
+      "it_s": 0.1709,
+      "tokens_s": 350,
+      "bf16_weights_gb": 65.1,
+      "qlora_est_gb": 17.9,
+      "watts": 85.95,
+      "measured": false
+    }
+  },
+  "renikud": {
+    "params_m": 307,
+    "batch": 16,
+    "seq": 256,
+    "precision": "fp16",
+    "it_s": 2.69,
+    "samples_s": 43.1,
+    "peak_vram_gb": 8.5,
+    "measured": true
+  }
+}

@@ -1,0 +1,71 @@
+{
+  "device": {
+    "gpu": "NVIDIA GeForce RTX 3090",
+    "vram_gb": 25.3,
+    "sm": "8.6",
+    "torch": "2.13.0+cu132",
+    "cuda": "13.2",
+    "arch": "x86_64",
+    "power_limit_w": 420.0,
+    "driver": "595.71.05"
+  },
+  "seq": 2048,
+  "roofline": {
+    "matmul_tflops": 77.5,
+    "bandwidth_gbs": 840
+  },
+  "models": {
+    "300m": {
+      "params_b": 0.37,
+      "batch": 1,
+      "seq": 2048,
+      "it_s": 9.896,
+      "tokens_s": 20268,
+      "peak_vram_gb": 5.1,
+      "watts": 244.17,
+      "measured": true
+    },
+    "1.3b": {
+      "params_b": 1.36,
+      "batch": 1,
+      "seq": 2048,
+      "it_s": 3.377,
+      "tokens_s": 6917,
+      "peak_vram_gb": 12.8,
+      "watts": 414.77,
+      "measured": true
+    },
+    "7b": {
+      "params_b": 6.74,
+      "batch": 1,
+      "seq": 2048,
+      "it_s": 0.7715,
+      "tokens_s": 1580,
+      "bf16_weights_gb": 13.5,
+      "qlora_est_gb": 3.7,
+      "watts": 182.27,
+      "measured": false
+    },
+    "30b": {
+      "params_b": 32.53,
+      "batch": 1,
+      "seq": 2048,
+      "it_s": 0.1641,
+      "tokens_s": 336,
+      "bf16_weights_gb": 65.1,
+      "qlora_est_gb": 17.9,
+      "watts": 320.54,
+      "measured": false
+    }
+  },
+  "renikud": {
+    "params_m": 307,
+    "batch": 16,
+    "seq": 256,
+    "precision": "fp16",
+    "it_s": 5.04,
+    "samples_s": 80.7,
+    "peak_vram_gb": 8.4,
+    "measured": true
+  }
+}
