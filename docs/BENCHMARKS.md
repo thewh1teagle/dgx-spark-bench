@@ -58,23 +58,54 @@ Notes from the first run:
   not saturated at batch 1. Larger batches would likely improve tok/s meaningfully —
   worth a sweep before drawing final conclusions.
 
-### All GPUs — batch 1, measured 2026-08-24
+### RTX 5090 (450W) — measured 2026-08-25
+
+`NVIDIA GeForce RTX 5090` · 33.7 GB · sm_12.0 · x86_64 · driver 595.84 ·
+torch 2.13.0+cu130 · power limit **450 W**. Quick run (`--renikud`, no `--sweep`),
+single GPU (`CUDA_VISIBLE_DEVICES=0`). Full run: **23 seconds**.
+
+| tier | it/s | throughput | peak VRAM | power |
+|---|---|---|---|---|
+| bf16 matmul (8192³) | — | **219.3 TFLOP/s** | — | — |
+| memory bandwidth | — | **1512 GB/s** | — | — |
+| 300M (seq 2048, b1) | 25.51 | 52,238 tok/s | 5.1 GB | 119 W |
+| 1.3B (seq 2048, b1) | 8.55 | 17,508 tok/s | 12.9 GB | 455 W |
+| 7B * | 2.14 | 4,382 tok/s | 13.5 GB weights | 229 W |
+| 30B * | 0.45 | 918 tok/s | 65.1 GB weights | 99 W |
+| **renikud** (b16, seq 256, fp16) | **13.03** | 208.4 samples/s | 8.5 GB | — |
+
+Raw JSON: [`results/results-NVIDIA_GeForce_RTX_5090-450W.json`](../results/results-NVIDIA_GeForce_RTX_5090-450W.json).
+
+Notes:
+
+- **450 W vs 575 W.** Same SKU as the vast.ai 5090, but this card's TDP is locked 125 W
+  lower. 1.3B sat at 455 W (pinned to the cap) and lost ~5% tok/s (17,508 vs 18,403).
+  bf16 matmul dropped from 237.0 to 219.3 TFLOP/s, in line with that.
+- **Bandwidth is the same** (1512 vs 1506 GB/s). The 450 W cap is a compute limit, not
+  a memory-bandwidth one.
+- **renikud was slightly faster** (208.4 vs 200.6 samp/s). Batch 16 does not appear
+  power-limited on this step; driver 595.84 vs 580.95.05 is another uncontrolled
+  variable.
+- **No batch sweep** on this box, so there is no peak-throughput number to pair with
+  the 276 samp/s @b64 from the 575 W card.
+
+### All GPUs — batch 1, measured 2026-08-24 / 2026-08-25
 
 All runs on torch 2.13.0 (cu130 or cu132), seq 2048 for the LM tiers, seq 256 batch 16
-fp16 for renikud. RTX cards rented on vast.ai.
+fp16 for renikud. 3090 / 4090 / 5090-575W rented on vast.ai; 5090-450W is a local card.
 
-| | **GB10** | RTX 3090 | RTX 4090 | RTX 5090 |
-|---|---|---|---|---|
-| memory | 130.7 GB unified | 25.3 GB | 25.3 GB | 33.7 GB |
-| power limit | — | 420 W | 450 W | 575 W |
-| bf16 matmul | 93.7 TFLOP/s | 77.5 | 162.2 | **237.0** |
-| bandwidth | 221 GB/s | 840 | 913 | **1506** |
-| 300M | 15,567 tok/s | 20,268 | 40,022 | **51,257** |
-| 1.3B | 5,305 tok/s | 6,917 | 13,524 | **18,403** |
-| 7B * | 1,618 tok/s | 1,580 | 3,282 | **4,512** |
-| 30B * | 350 tok/s | 336 | 699 | **1,014** |
-| **renikud** | 43.1 samp/s | 80.7 | 151.7 | **200.6** |
-| power under load | 43–86 W | 182–415 W | 146–442 W | 108–511 W |
+| | **GB10** | RTX 3090 | RTX 4090 | 5090 575W | 5090 450W |
+|---|---|---|---|---|---|
+| memory | 130.7 GB unified | 25.3 GB | 25.3 GB | 33.7 GB | 33.7 GB |
+| power limit | — | 420 W | 450 W | 575 W | 450 W |
+| bf16 matmul | 93.7 TFLOP/s | 77.5 | 162.2 | **237.0** | 219.3 |
+| bandwidth | 221 GB/s | 840 | 913 | 1506 | **1512** |
+| 300M | 15,567 tok/s | 20,268 | 40,022 | 51,257 | **52,238** |
+| 1.3B | 5,305 tok/s | 6,917 | 13,524 | **18,403** | 17,508 |
+| 7B * | 1,618 tok/s | 1,580 | 3,282 | **4,512** | 4,382 |
+| 30B * | 350 tok/s | 336 | 699 | **1,014** | 918 |
+| **renikud** | 43.1 samp/s | 80.7 | 151.7 | 200.6 | **208.4** |
+| power under load | 43–86 W | 182–415 W | 146–442 W | 108–511 W | 99–455 W |
 
 `*` extrapolated from single-block timing.
 
@@ -101,8 +132,9 @@ memory to keep climbing. That narrows the renikud gap from 4.7x to **4.05x** aga
 
 ### What the numbers say
 
-**On renikud, the workload that actually matters here:** the 5090 is **4.7x** the Spark
-at batch 16. The 4090 is 3.5x, the 3090 1.9x.
+**On renikud, the workload that actually matters here:** the 450 W 5090 is **4.8x** the
+Spark at batch 16; the 575 W 5090 is 4.7x. The 4090 is 3.5x, the 3090 1.9x. Dropping
+the 5090 from 575 W to 450 W costs ~5% on the 1.3B train step and nothing on renikud.
 
 **The Spark only ever beats the 3090**, and only on the compute-bound extrapolated
 tiers (7B, 30B) where its Blackwell tensor cores out-muscle Ampere — 93.7 vs 77.5
