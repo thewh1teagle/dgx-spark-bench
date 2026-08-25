@@ -31,7 +31,8 @@ uv run src/bench.py --renikud
 | DGX Spark GB10 | 131 GB | 43 `████` | 1.0x | 68 @b256 † |
 | RTX 3090 | 24 GB | 81 `████████` | 1.9x | 99 @b64 |
 | RTX 4090 | 24 GB | 152 `███████████████` | 3.5x | 188 @b64 |
-| RTX 5090 | 32 GB | 201 `████████████████████` | **4.7x** | 276 @b64 |
+| RTX 5090 (575W) | 32 GB | 201 `████████████████████` | 4.7x | 276 @b64 |
+| RTX 5090 (450W) | 32 GB | 208 `█████████████████████` | **4.8x** | — |
 
 Everything else, batch 1, seq 2048:
 
@@ -40,10 +41,12 @@ Everything else, batch 1, seq 2048:
 | DGX Spark GB10 | 93.7 TFLOP/s | 221 GB/s | 5,305 tok/s | 350 tok/s |
 | RTX 3090 | 77.5 | 840 | 6,917 | 336 |
 | RTX 4090 | 162.2 | 913 | 13,524 | 699 |
-| RTX 5090 | **237.0** | **1506** | **18,403** | **1,014** |
+| RTX 5090 (575W) | **237.0** | 1506 | **18,403** | **1,014** |
+| RTX 5090 (450W) | 219.3 | **1512** | 17,508 | 918 |
 
 † The Spark was still improving when it hit the sweep's batch cap, so 68 is a floor. At
-peak the renikud gap narrows to **4.05x** (5090), 2.76x (4090), 1.45x (3090).
+peak the renikud gap narrows to **4.05x** (5090 575W), 2.76x (4090), 1.45x (3090). The
+450W 5090 is a second card (driver 595.84); it was a quick run with no `--sweep`.
 
 `*` The 7B/30B rows are extrapolated from one block and are **not comparable across
 architectures** — the flat overhead term flatters low-bandwidth parts like the GB10. See
